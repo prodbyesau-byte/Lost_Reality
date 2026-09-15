@@ -10,7 +10,7 @@ Import [project.godot](project.godot) in Godot 4 and press **F6 on `core/game.ts
 
 Alternatively, run `./Run-Game.ps1 -GodotPath 'C:\path\to\Godot_console.exe'`. Set `GODOT_PATH` to avoid supplying the path each time. No external addons or assets are required.
 
-The standalone Windows build is `build/HauntedDimension.exe`. All game data is embedded in the executable; Godot does not need to be installed to play it.
+Download the [standalone Windows build from GitHub Releases](https://github.com/prodbyesau-byte/DemonTime/releases/tag/build-2026-09-15). Locally it is `build/HauntedDimension.exe`. All game data is embedded in the executable; Godot does not need to be installed to play it. Build output is distributed through Releases rather than stored in Git history.
 
 **F4** switches Atmospheric/Performance profiles while playing. Performance removes optional effects, local light shadows and secondary clutter while preserving curved and bevelled asset silhouettes. On older graphics hardware, launch `HauntedDimension.exe --rendering-method gl_compatibility`; unsupported SSAO/volumetric effects are disabled automatically. Profiles are presentation-only and do not change saved data.
 
