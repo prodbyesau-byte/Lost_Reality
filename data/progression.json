@@ -1,0 +1,7 @@
+{
+  "first_level_xp": 100,
+  "xp_increase_per_level": 50,
+  "first_level_attribute_points": 3,
+  "later_level_attribute_points": 2,
+  "maximum_level": 100
+}

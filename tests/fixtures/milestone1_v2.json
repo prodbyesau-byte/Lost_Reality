@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "metadata": {"slot": 1, "timestamp": 1789316033, "playtime": 42.5},
+  "scene": "tenement",
+  "player": {"position": [-5, 0.01, 4], "rotation": [0, 0.75, 0]},
+  "sections": {
+    "world": {"tenement/lamp": true, "tenement/passage_door": false},
+    "future_extension": {"preserve": "untouched"}
+  }
+}

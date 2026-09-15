@@ -1,0 +1,180 @@
+{
+  "materials": {
+    "plaster": {
+      "color": "858477",
+      "roughness": 0.92,
+      "metallic": 0.0,
+      "normal": 0.3
+    },
+    "paint": {
+      "color": "414e43",
+      "roughness": 0.76,
+      "metallic": 0.0,
+      "normal": 0.16
+    },
+    "concrete": {
+      "color": "626860",
+      "roughness": 0.92,
+      "metallic": 0.0,
+      "normal": 0.36
+    },
+    "wood": {
+      "color": "514335",
+      "roughness": 0.78,
+      "metallic": 0.0,
+      "normal": 0.22,
+      "texture": "wood"
+    },
+    "wood_edge": {
+      "color": "786750",
+      "roughness": 0.85,
+      "metallic": 0.0,
+      "normal": 0.14,
+      "texture": "wood"
+    },
+    "metal": {
+      "color": "424b4d",
+      "roughness": 0.55,
+      "metallic": 0.75,
+      "normal": 0.14,
+      "texture": "metal"
+    },
+    "rust": {
+      "color": "624437",
+      "roughness": 0.95,
+      "metallic": 0.0,
+      "normal": 0.28,
+      "texture": "metal"
+    },
+    "fabric": {
+      "color": "737267",
+      "roughness": 0.98,
+      "metallic": 0.0,
+      "normal": 0.12,
+      "texture": "fabric"
+    },
+    "jacket": {
+      "color": "5f695d",
+      "roughness": 0.95,
+      "metallic": 0.0,
+      "normal": 0.1,
+      "texture": "fabric"
+    },
+    "denim": {
+      "color": "343d45",
+      "roughness": 0.94,
+      "metallic": 0.0,
+      "normal": 0.12,
+      "texture": "fabric"
+    },
+    "skin": {
+      "color": "a18b76",
+      "roughness": 0.7,
+      "metallic": 0.0,
+      "normal": 0.05,
+      "texture": "skin"
+    },
+    "rubber": {
+      "color": "262c2a",
+      "roughness": 0.9,
+      "metallic": 0.0,
+      "normal": 0.08
+    },
+    "paper": {
+      "color": "9c977f",
+      "roughness": 0.99,
+      "metallic": 0.0,
+      "normal": 0.02
+    },
+    "soil": {
+      "color": "33392b",
+      "roughness": 0.98,
+      "metallic": 0.0,
+      "normal": 0.35
+    },
+    "vegetation": {
+      "color": "4b5940",
+      "roughness": 0.92,
+      "metallic": 0.0,
+      "normal": 0.12,
+      "texture": "leaf"
+    },
+    "corruption": {
+      "color": "362b27",
+      "roughness": 0.64,
+      "metallic": 0.0,
+      "normal": 0.2,
+      "texture": "bark"
+    },
+    "stain": {
+      "color": "373c30",
+      "roughness": 0.93,
+      "metallic": 0.0,
+      "normal": 0.1
+    },
+    "glass": {
+      "color": "4c6062",
+      "roughness": 0.24,
+      "metallic": 0.0,
+      "normal": 0.04,
+      "texture": "metal"
+    },
+    "car_paint": {
+      "texture": "metal",
+      "roughness": 0.4,
+      "color": "788d87",
+      "normal": 0.08,
+      "metallic": 0.28
+    },
+    "brick": {
+      "texture": "brick",
+      "roughness": 0.94,
+      "color": "9b7966",
+      "normal": 0.75,
+      "metallic": 0.0
+    },
+    "bark": {
+      "texture": "bark",
+      "roughness": 0.95,
+      "color": "65594a",
+      "normal": 0.65,
+      "metallic": 0.0
+    },
+    "asphalt": {
+      "texture": "asphalt",
+      "roughness": 0.91,
+      "color": "454b4c",
+      "normal": 0.35,
+      "metallic": 0.0
+    },
+    "roof": {
+      "texture": "roof",
+      "roughness": 0.82,
+      "color": "4e5960",
+      "normal": 0.7,
+      "metallic": 0.0
+    },
+    "plastic": {
+      "texture": "metal",
+      "roughness": 0.65,
+      "color": "5e6560",
+      "normal": 0.05,
+      "metallic": 0.0
+    },
+    "hair": {
+      "texture": "bark",
+      "roughness": 0.93,
+      "color": "3e332c",
+      "normal": 0.18,
+      "metallic": 0.0
+    }
+  },
+  "lighting": {
+    "ambient_energy": 0.48,
+    "moon_energy": 1.15,
+    "ambient_color": "8798a7",
+    "moon_color": "a4b7c7",
+    "warm_color": "efba7c",
+    "fog_density": 0.0018
+  }
+}

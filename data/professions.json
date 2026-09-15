@@ -1,0 +1,29 @@
+[
+  {
+    "id": "engineer",
+    "name": "Engineer",
+    "description": "A practical, analytical path. Placeholder bonuses; no abilities yet.",
+    "unlock_requirements": {"minimum_level": 1, "base_stats": {}},
+    "starting_bonuses": {"stats": {"intelligence": 1}},
+    "stat_modifiers": {"dexterity": 1},
+    "skill_modifiers": {}
+  },
+  {
+    "id": "police_officer",
+    "name": "Police Officer",
+    "description": "An observant, disciplined path. Placeholder bonuses; no abilities yet.",
+    "unlock_requirements": {"minimum_level": 1, "base_stats": {}},
+    "starting_bonuses": {"stats": {"perception": 1}},
+    "stat_modifiers": {"willpower": 1},
+    "skill_modifiers": {}
+  },
+  {
+    "id": "paramedic",
+    "name": "Paramedic",
+    "description": "A calm, resilient path. Placeholder bonuses; no abilities yet.",
+    "unlock_requirements": {"minimum_level": 1, "base_stats": {}},
+    "starting_bonuses": {"stats": {"willpower": 1}},
+    "stat_modifiers": {"fitness": 1},
+    "skill_modifiers": {}
+  }
+]

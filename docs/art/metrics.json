@@ -1,0 +1,26 @@
+[
+  {
+    "draw_calls": 453,
+    "median_frame_ms": 33.301,
+    "p95_frame_ms": 33.698,
+    "primitives": 38188,
+    "renderer": "forward_plus",
+    "view": "tenement"
+  },
+  {
+    "draw_calls": 237,
+    "median_frame_ms": 33.337,
+    "p95_frame_ms": 33.663,
+    "primitives": 18384,
+    "renderer": "forward_plus",
+    "view": "courtyard"
+  },
+  {
+    "draw_calls": 198,
+    "median_frame_ms": 33.313,
+    "p95_frame_ms": 33.785,
+    "primitives": 7604,
+    "renderer": "forward_plus",
+    "view": "performance"
+  }
+]
