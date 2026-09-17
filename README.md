@@ -12,7 +12,7 @@ Import [project.godot](project.godot) in Godot 4 and press **F6 on `core/game.ts
 
 Alternatively, run `./Run-Game.ps1 -GodotPath 'C:\path\to\Godot_console.exe'`. Set `GODOT_PATH` to avoid supplying the path each time. No external addons or assets are required.
 
-Download the [standalone Windows build from GitHub Releases](https://github.com/prodbyesau-byte/DemonTime/releases/tag/build-2026-09-15). The current local build is `build/LostReality.exe`; the linked GitHub release is the older pre-rebrand build. All game data is embedded in the executable; Godot does not need to be installed to play it. Build output is distributed through Releases rather than stored in Git history.
+The local standalone Windows build is `build/LostReality.exe`, rebuilt with the minimap and world map on 18 September 2026. All game data is embedded in the executable; Godot does not need to be installed to play it. Build output is excluded from Git. To rebuild after cloning, install Godot 4.7.2 and its export templates, create the `build` directory, and export the **Windows Desktop** release preset.
 
 **F4** switches Atmospheric/Performance profiles while playing. Performance removes optional effects, local light shadows and secondary clutter while preserving curved and bevelled asset silhouettes. On older graphics hardware, launch `LostReality.exe --rendering-method gl_compatibility`; unsupported SSAO/volumetric effects are disabled automatically. Profiles are presentation-only and do not change saved data.
 
@@ -25,6 +25,7 @@ Download the [standalone Windows build from GitHub Releases](https://github.com/
 | E | Interact with nearest reachable object |
 | Escape | Pause / load menu; return to game |
 | C | Character / Progression panel; close it with C or Escape |
+| M | World Map; M or Escape closes it. Drag to pan, mouse wheel to zoom |
 | F3 | Position, speed, zoom, playtime and FPS overlay |
 | F4 | Atmospheric / Performance visual profile |
 
@@ -52,10 +53,12 @@ Strength, Fitness, Dexterity, Perception, Intelligence and Willpower have **no h
 - Saves use a JSON envelope with SHA-256 over the exact payload string. Structural, version, numeric, scene and position checks run before state is applied. Hashes detect corruption, not intentional cheating.
 - Writes stage and flush a same-directory temporary file, read it back through the validation pipeline, retain a verified previous backup, then rename over the primary without deleting the primary first.
 - Reads prefer primary → backup → verified temporary file. Recovery is explicitly indicated in the menu and load message. A valid backup is never replaced by a corrupt primary. Loading does not rewrite recovery files; the next successful save repairs the primary.
-- Format version is **3**. Existing Milestone 1 version 2 saves gain zeroed Level 0 progression through migration, preserving metadata, transforms, world state and unknown namespaces. The sequential v1 → v2 → v3 chain is tested. Missing progression in a v3 save, invalid point budgets, inconsistent unlocks and locked/unknown selected professions are rejected before applying state. Saves from newer formats remain protected. Westvale's unrelated schema was never supplied, so compatibility with Westvale itself is not claimed.
+- Format version is **4**. The sequential v1 → v2 → v3 → v4 chain preserves metadata, transforms, world state, progression and unknown namespaces. Version 2 gains zeroed Level 0 progression; version 3 gains empty exploration. Missing required sections, malformed exploration, invalid point budgets, inconsistent unlocks and locked/unknown professions are rejected before applying state. Saves from newer formats remain protected. Westvale's unrelated schema was never supplied, so compatibility with Westvale itself is not claimed.
 - Data lives at `user://saves` (normally `%APPDATA%\Godot\app_userdata\Haunted Dimension\saves` on Windows). `.bak` and `.tmp` files belong to their slot, not extra user-facing slots.
 
 ## Architecture / important files
+
+The square top-left minimap and **M World Map** share persistent, line-of-sight exploration. Savepoints and locations appear only after discovery. The world map pauses gameplay and supports drag, wheel zoom, recentering and selecting discovered areas/floors. See [map architecture, extension contracts and development tools](docs/MAP_SYSTEM.md).
 
 | File or directory | Responsibility |
 | --- | --- |

@@ -1,4 +1,6 @@
 extends Node
+signal sections_replaced
+signal section_changed(key: String)
 ## JSON-only namespaced persistence. Future systems own a section, not a save file.
 ## Registered validators must be pure: they run before any loaded state is applied.
 var sections: Dictionary = {}
@@ -37,6 +39,7 @@ func set_section(key: String, value: Dictionary) -> bool:
 	if _validators.has(key) and not _validators[key].call(value):
 		return false
 	sections[key] = value.duplicate(true)
+	section_changed.emit(key)
 	return true
 
 func snapshot() -> Dictionary:
@@ -45,7 +48,9 @@ func snapshot() -> Dictionary:
 func restore(value: Dictionary, playtime: float) -> void:
 	sections = value.duplicate(true)
 	total_playtime = playtime
+	sections_replaced.emit()
 
 func reset() -> void:
 	sections = _defaults.duplicate(true)
 	total_playtime = 0.0
+	sections_replaced.emit()

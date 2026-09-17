@@ -17,6 +17,7 @@ GameState="*res://core/state/game_state.gd"
 SceneRouter="*res://core/scene_management/scene_router.gd"
 SaveManager="*res://core/save/save_manager.gd"
 Progression="*res://core/progression/progression.gd"
+MapManager="*res://core/map/map_manager.gd"
 VisualQuality="*res://art/presentation/visual_quality.gd"
 
 [display]

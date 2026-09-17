@@ -1,7 +1,7 @@
 class_name SaveConstants
 extends RefCounted
 
-const VERSION: int = 3
+const VERSION: int = 4
 const FORMAT: String = "haunted-dimension-save"
 const MANUAL_SLOTS: Array[int] = [1, 2, 3]
 const AUTOSAVE_SLOT: int = 0

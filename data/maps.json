@@ -1,0 +1,28 @@
+{
+  "tenement": {
+    "title": "The Tenement", "layout": "res://data/tenement.json",
+    "floors": {"0": {
+      "title": "Ground floor", "min_y": -0.1, "max_y": 4.0,
+      "origin": [-14, -14], "size": [56, 56], "cell_size": 0.5,
+      "pois": {
+        "refuge": {"title": "REFUGE", "kind": "LOCATION", "position": [-6, 0, 5]},
+        "hall": {"title": "HALL", "kind": "LOCATION", "position": [6, 0, 5]},
+        "passage": {"title": "PASSAGE", "kind": "LOCATION", "position": [0, 0, -7]},
+        "savepoint": {"title": "Savepoint", "kind": "SAVEPOINT", "position": [-6.6, 0, 3]},
+        "courtyard_exit": {"title": "To Courtyard", "kind": "POI", "position": [8, 0, -9]}
+      }
+    }}
+  },
+  "courtyard": {
+    "title": "The Courtyard", "layout": "res://data/courtyard.json",
+    "floors": {"0": {
+      "title": "Ground floor", "min_y": -0.1, "max_y": 4.0,
+      "origin": [-14, -14], "size": [56, 56], "cell_size": 0.5,
+      "pois": {
+        "courtyard": {"title": "COURTYARD", "kind": "LOCATION", "position": [0, 0, 6]},
+        "savepoint": {"title": "Savepoint", "kind": "SAVEPOINT", "position": [-9, 0, 4]},
+        "tenement_exit": {"title": "To Tenement", "kind": "POI", "position": [-7, 0, 9]}
+      }
+    }}
+  }
+}

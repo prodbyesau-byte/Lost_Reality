@@ -176,7 +176,7 @@ func test_persistence() -> void:
 func test_migration_and_corruption() -> void:
 	var legacy: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://tests/fixtures/milestone1_v2.json"))
 	var migrated := SaveMigrator.migrate(legacy)
-	check(migrated.ok and migrated.data.version == 3 and legacy.version == 2 and not legacy.sections.has("progression"), "Actual M1-shaped v2 fixture migrates without source mutation")
+	check(migrated.ok and migrated.data.version == SaveConstants.VERSION and legacy.version == 2 and not legacy.sections.has("progression"), "Actual M1-shaped v2 fixture migrates without source mutation")
 	check(migrated.data.sections.progression == ProgressionSchema.defaults(), "M1 migration adds zeroed Level 0 progression")
 	check(migrated.data.player == legacy.player and migrated.data.metadata == legacy.metadata and migrated.data.sections.world == legacy.sections.world, "M1 migration preserves transform, metadata and world state")
 	var v1 := legacy.duplicate(true)
@@ -248,7 +248,7 @@ func test_migration_and_corruption() -> void:
 	await authorize()
 	check(SaveManager.save_manual(1, store.revision(1)).ok, "Migrated M1 slot can be overwritten with confirmation")
 	menu.close()
-	check(store.read_slot(1).data.version == 3 and store.read_file(store.path_for(1) + ".bak", 1).ok, "Migrated overwrite retains valid recoverable previous data")
+	check(store.read_slot(1).data.version == SaveConstants.VERSION and store.read_file(store.path_for(1) + ".bak", 1).ok, "Migrated overwrite retains valid recoverable previous data")
 
 func test_new_game_and_limits() -> void:
 	Progression.award_xp(100)

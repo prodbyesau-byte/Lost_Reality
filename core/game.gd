@@ -8,6 +8,9 @@ func _ready() -> void:
 	add_child(host)
 	var player := preload("res://actors/player/player.tscn").instantiate() as PlayerActor
 	add_child(player)
+	var player_marker := MapTrackable.new()
+	player_marker.category = MapTrackable.Category.PLAYER
+	player.add_child(player_marker)
 	var camera := IsometricCameraRig.new()
 	camera.name = "CameraRig"
 	add_child(camera)
@@ -19,6 +22,7 @@ func _ready() -> void:
 	add_child(hud)
 	var menu := SaveLoadMenu.new()
 	add_child(menu)
+	add_child(MapUI.new())
 	var start_screen := StartScreen.new()
 	add_child(start_screen)
 
@@ -27,7 +31,7 @@ func _configure_input() -> void:
 		"move_up": [KEY_W, KEY_UP], "move_down": [KEY_S, KEY_DOWN],
 		"move_left": [KEY_A, KEY_LEFT], "move_right": [KEY_D, KEY_RIGHT],
 		"interact": [KEY_E], "menu": [KEY_ESCAPE], "debug_overlay": [KEY_F3],
-		"character": [KEY_C], "visual_quality": [KEY_F4]
+		"character": [KEY_C], "visual_quality": [KEY_F4], "world_map": [KEY_M]
 	}
 	for action in mappings:
 		if not InputMap.has_action(action):

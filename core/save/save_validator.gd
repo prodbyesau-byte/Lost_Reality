@@ -55,6 +55,8 @@ static func validate(data: Dictionary, slot: int) -> String:
 			return "Save sections must be dictionaries."
 	if not ProgressionSchema.valid(data.sections.get("progression")):
 		return "Invalid or missing progression data."
+	if not ExplorationSchema.valid(data.sections.get("exploration")):
+		return "Invalid or missing exploration data."
 	# Existing world objects have a small, explicit schema. Unknown namespaces survive.
 	var world: Variant = data.sections.get("world", {})
 	for key in world:

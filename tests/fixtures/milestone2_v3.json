@@ -1,0 +1,16 @@
+{
+  "version": 3,
+  "metadata": {"slot": 1, "timestamp": 1789316033, "playtime": 42.5},
+  "scene": "tenement",
+  "player": {"position": [-5, 0.01, 4], "rotation": [0, 0.75, 0]},
+  "sections": {
+    "world": {"tenement/lamp": true, "tenement/passage_door": false},
+    "progression": {
+      "level": 1, "xp": 23, "attribute_points": 2,
+      "stats": {"strength": 0, "fitness": 0, "dexterity": 0, "perception": 0, "intelligence": 1, "willpower": 0},
+      "profession_unlocks": {"engineer": true, "police_officer": true, "paramedic": true},
+      "selected_profession": "engineer"
+    },
+    "future_extension": {"preserve": "untouched"}
+  }
+}

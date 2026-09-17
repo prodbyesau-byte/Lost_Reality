@@ -62,6 +62,7 @@ func _build() -> void:
 			_solids.append({"position": object.position + Vector3(0, 0.7, 0), "size": Vector3(0.65, 1.4, 0.65)})
 	ArtDressing.dress(self,layout_path.get_basename()+"_art.json")
 	VisualQuality.create_environment(self)
+	MapManager.attach_area(self, layout.id)
 
 func apply_persistent_state() -> void:
 	for child in get_children():

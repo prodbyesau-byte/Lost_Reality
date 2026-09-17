@@ -19,15 +19,15 @@ func _ready() -> void:
 	loading.hide()
 	root.add_child(loading)
 	interaction = UIStyle.label("", 18, UIStyle.ACCENT)
-	interaction.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_RIGHT)
-	interaction.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	interaction.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_LEFT)
+	interaction.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	root.add_child(interaction)
 	toast = UIStyle.label("", 17)
 	toast.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_LEFT)
 	toast.position = Vector2(40, -85)
 	root.add_child(toast)
 	debug_label = UIStyle.label("", 15, UIStyle.ACCENT)
-	debug_label.position = Vector2(40, 142)
+	debug_label.position = Vector2(40, 270)
 	debug_label.visible = false
 	root.add_child(debug_label)
 	for label in [interaction,toast,debug_label]:
@@ -62,6 +62,6 @@ func _update_interaction() -> void:
 	if interaction.text.is_empty() or SceneRouter.busy or get_tree().paused or not is_instance_valid(SceneRouter.player):
 		return
 	interaction.reset_size()
-	interaction.position = get_viewport().get_visible_rect().size - interaction.size - Vector2(32,32)
+	interaction.position = Vector2(32, get_viewport().get_visible_rect().size.y - interaction.size.y - 32)
 	interaction.show()
 

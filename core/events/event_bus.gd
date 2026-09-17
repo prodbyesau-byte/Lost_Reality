@@ -11,3 +11,4 @@ signal progression_changed
 signal level_up(level: int)
 signal progression_unlocked
 signal profession_changed(previous_id: String, selected_id: String)
+signal blocking_menu_opened

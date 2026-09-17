@@ -125,8 +125,8 @@ func _interaction_tests() -> void:
 		if node is GameHUD: hud = node
 	hud._update_interaction()
 	check(hud.interaction.visible and hud.interaction.text == "E - Activate", "Nearby object supplies contextual action")
-	var corner := hud.interaction.position + hud.interaction.size
-	check(corner.distance_to(get_viewport().get_visible_rect().size - Vector2(32,32)) < 1.0, "Interaction prompt anchored bottom-right")
+	var corner := hud.interaction.position + Vector2(0, hud.interaction.size.y)
+	check(corner.distance_to(Vector2(32, get_viewport().get_visible_rect().size.y - 32)) < 1.0, "Interaction prompt anchored bottom-left")
 	if "--visual" in OS.get_cmdline_user_args():
 		await RenderingServer.frame_post_draw
 		get_viewport().get_texture().get_image().save_png("res://tests/output/player_interaction.png")

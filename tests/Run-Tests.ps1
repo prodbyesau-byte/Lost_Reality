@@ -47,6 +47,12 @@ Invoke-GodotCheck 'pause-save' $pauseArgs
 $displayArgs = @('--path', $projectPath, 'res://tests/fullscreen.tscn')
 if (-not $Visual) { $displayArgs = @('--headless') + $displayArgs }
 Invoke-GodotCheck 'fullscreen' $displayArgs
+$mapArgs = @('--path', $projectPath, 'res://tests/map_system.tscn')
+if ($Visual) { $mapArgs += @('--', '--visual') } else { $mapArgs = @('--headless') + $mapArgs }
+Invoke-GodotCheck 'map-system' $mapArgs
+Invoke-GodotCheck 'map-debug' @('--headless', '--path', $projectPath, 'res://tests/map_system.tscn', '--', '--map-debug')
+Invoke-GodotCheck 'map-restart-seed' @('--headless', '--path', $projectPath, 'res://tests/map_system.tscn', '--', '--map-restart-seed')
+Invoke-GodotCheck 'map-restart-load' @('--headless', '--path', $projectPath, 'res://tests/map_system.tscn', '--', '--map-restart-load')
 Invoke-GodotCheck 'restart-seed' @('--headless', '--path', $projectPath, 'res://tests/regression.tscn', '--', '--restart-seed')
 Invoke-GodotCheck 'restart-load' @('--headless', '--path', $projectPath, 'res://tests/regression.tscn', '--', '--restart-load')
 Write-Output 'All regression checks passed.'

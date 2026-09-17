@@ -156,7 +156,6 @@ func _load(slot: int) -> void:
 func _finish() -> void:
 	overlay.hide()
 	get_tree().paused = false
-	EventBus.message_requested.emit("Welcome back.")
 
 func _clear_content_after_status() -> void:
 	while content.get_child_count() > 4:
@@ -185,7 +184,7 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("menu"):
 		if not working and current_view != "main": _show_main()
 		get_viewport().set_input_as_handled()
-	elif event.is_action_pressed("character") or event.is_action_pressed("interact"):
+	elif event.is_action_pressed("character") or event.is_action_pressed("interact") or event.is_action_pressed("world_map"):
 		get_viewport().set_input_as_handled()
 
 

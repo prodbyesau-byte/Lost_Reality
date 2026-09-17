@@ -142,6 +142,7 @@ func _unhandled_input(event: InputEvent) -> void:
 func open(at_save_point: bool) -> void:
 	if working or SceneRouter.busy:
 		return
+	EventBus.blocking_menu_opened.emit()
 	save_mode = at_save_point and SaveManager.authorized()
 	if not save_mode:
 		SaveManager.end_manual_session()
@@ -165,6 +166,7 @@ func open(at_save_point: bool) -> void:
 func open_character() -> void:
 	if working or SceneRouter.busy:
 		return
+	EventBus.blocking_menu_opened.emit()
 	SaveManager.end_manual_session()
 	save_mode = false
 	character_view = true

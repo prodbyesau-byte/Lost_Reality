@@ -23,4 +23,10 @@ static func migrate(source: Dictionary) -> Dictionary:
 		if not data.sections.has("progression"):
 			data.sections["progression"] = ProgressionSchema.defaults()
 		data["version"] = 3
+	if data.version == 3:
+		if not data.get("sections") is Dictionary:
+			return {"ok": false, "error": "Invalid version 3 state."}
+		if not data.sections.has("exploration"):
+			data.sections["exploration"] = ExplorationSchema.defaults()
+		data["version"] = 4
 	return {"ok": true, "data": data}

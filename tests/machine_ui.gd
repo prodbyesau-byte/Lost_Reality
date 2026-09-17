@@ -21,7 +21,7 @@ func run() -> void:
 	SaveManager.store = SaveStore.new("user://regression_machine_unused")
 	check(ProjectSettings.get_setting("application/config/name") == "Lost Reality","Visible application rebranded")
 	check(OS.get_user_data_dir().replace("\\","/").ends_with("Godot/app_userdata/Haunted Dimension"),"Rebrand retains exact legacy save directory")
-	check(SaveConstants.FORMAT == "haunted-dimension-save" and SaveConstants.VERSION == 3,"Save format remains compatible")
+	check(SaveConstants.FORMAT == "haunted-dimension-save" and SaveConstants.VERSION == 4,"Save envelope remains compatible with exploration schema")
 	var game := preload("res://core/game.tscn").instantiate()
 	add_child(game)
 	await settle()
