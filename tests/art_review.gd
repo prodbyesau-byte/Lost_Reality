@@ -22,7 +22,11 @@ func settle(frames: int = 30) -> void:
 
 func run() -> void:
 	SaveManager.store = SaveStore.new("user://regression_art_unused")
-	add_child(preload("res://core/game.tscn").instantiate())
+	var game := preload("res://core/game.tscn").instantiate()
+	add_child(game)
+	for startup in game.get_children():
+		if startup is StartScreen:
+			await startup._new_game()
 	await settle(80)
 	check(SceneRouter.current_id == "tenement", "Art pass boots into the same level")
 	check(SceneRouter.player.visual is HumanVisual, "Human visual is separate from player physics")
@@ -67,6 +71,9 @@ func run() -> void:
 	await settle(45)
 	await capture("close",false)
 	SceneRouter.camera_rig.desired_size = 28
+	# Advance the smoothing and timed LOD refresh independent of render frame rate.
+	SceneRouter.camera_rig._process(1.0)
+	VisualQuality._process(0.3)
 	await settle(45)
 	all_hidden = true
 	for detail in get_tree().get_nodes_in_group("art_details"):
@@ -108,3 +115,5 @@ func capture(id: String, measure: bool) -> void:
 		var metrics := {"view": id, "renderer": RenderingServer.get_current_rendering_method(), "median_frame_ms": elapsed[45], "p95_frame_ms": elapsed[85], "draw_calls": RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_TOTAL_DRAW_CALLS_IN_FRAME), "primitives": RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_TOTAL_PRIMITIVES_IN_FRAME)}
 		measurements.append(metrics)
 		print("ART METRICS ",JSON.stringify(metrics))
+
+

@@ -2,10 +2,13 @@
 config_version=5
 
 [application]
-config/name="Haunted Dimension"
+config/name="Lost Reality"
+config/use_custom_user_dir=true
+config/custom_user_dir_name="Godot/app_userdata/Haunted Dimension"
 run/main_scene="res://core/game.tscn"
 config/features=PackedStringArray("4.5", "Forward Plus")
-config/description="An original isometric 3D RPG foundation."
+config/description="Lost Reality — an original isometric RPG after The Downfall."
+boot_splash/show_image=false
 
 [autoload]
 DisplayPolicy="*res://core/display/display_policy.gd"
@@ -17,7 +20,7 @@ Progression="*res://core/progression/progression.gd"
 VisualQuality="*res://art/presentation/visual_quality.gd"
 
 [display]
-window/size/viewport_width=1440
+window/size/viewport_width=1600
 window/size/viewport_height=900
 window/size/mode=3
 window/stretch/mode="canvas_items"
@@ -39,3 +42,4 @@ common/physics_ticks_per_second=60
 [layer_names]
 3d_physics/layer_1="World"
 3d_physics/layer_2="Player"
+

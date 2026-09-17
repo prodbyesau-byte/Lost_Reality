@@ -30,6 +30,9 @@ func _run() -> void:
 	SaveManager.store = store
 	var game := preload("res://core/game.tscn").instantiate()
 	add_child(game)
+	for startup in game.get_children():
+		if startup is StartScreen:
+			await startup._new_game()
 	await tick(4)
 	actor = SceneRouter.player
 	for child in game.get_children():
@@ -117,11 +120,23 @@ func _interaction_tests() -> void:
 	actor.reset_motion()
 	await tick(3)
 	check(actor.interactor.can_interact(lamp), "Nearby object can be interacted with")
+	var hud: GameHUD
+	for node in get_parent().find_children("*","",true,false):
+		if node is GameHUD: hud = node
+	hud._update_interaction()
+	check(hud.interaction.visible and hud.interaction.text == "E - Activate", "Nearby object supplies contextual action")
+	var corner := hud.interaction.position + hud.interaction.size
+	check(corner.distance_to(get_viewport().get_visible_rect().size - Vector2(32,32)) < 1.0, "Interaction prompt anchored bottom-right")
+	if "--visual" in OS.get_cmdline_user_args():
+		await RenderingServer.frame_post_draw
+		get_viewport().get_texture().get_image().save_png("res://tests/output/player_interaction.png")
 	lamp.interact(actor)
 	check(GameState.get_section("world").get(lamp.persistent_id, false), "Test object changes persistent state")
 	actor.position = Vector3(10, 0.01, 10)
 	await tick()
 	check(not actor.interactor.can_interact(lamp), "Out-of-range interaction rejected")
+	hud._update_interaction()
+	check(not hud.interaction.visible, "Interaction prompt hides out of range")
 	# Put a solid wall between two nearby points to exercise LOS independently of range.
 	actor.position = Vector3(0.8, 0.01, 1)
 	var probe := Interactable.new()
@@ -354,3 +369,6 @@ func _finish() -> void:
 	get_tree().paused = false
 	print("REGRESSION RESULT: %d checks, %d failures" % [checks, failures])
 	get_tree().quit(1 if failures else 0)
+
+
+

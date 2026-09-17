@@ -32,9 +32,23 @@ Invoke-GodotCheck 'art' $artArgs
 $assetArgs = @('--path', $projectPath, 'res://tests/asset_review.tscn')
 if (-not $Visual) { $assetArgs = @('--headless') + $assetArgs }
 Invoke-GodotCheck 'assets' $assetArgs
+$playerArtArgs = @('--path', $projectPath, 'res://tests/player_visual_review.tscn')
+if (-not $Visual) { $playerArtArgs = @('--headless') + $playerArtArgs }
+Invoke-GodotCheck 'player-visual' $playerArtArgs
+$characterArgs = @('--path', $projectPath, 'res://tests/character_ui.tscn')
+if (-not $Visual) { $characterArgs = @('--headless') + $characterArgs }
+Invoke-GodotCheck 'character-ui' $characterArgs
+$machineArgs = @('--path', $projectPath, 'res://tests/machine_ui.tscn')
+if (-not $Visual) { $machineArgs = @('--headless') + $machineArgs }
+Invoke-GodotCheck 'machine-ui' $machineArgs
+$pauseArgs = @('--path', $projectPath, 'res://tests/pause_save_review.tscn')
+if (-not $Visual) { $pauseArgs = @('--headless') + $pauseArgs }
+Invoke-GodotCheck 'pause-save' $pauseArgs
 $displayArgs = @('--path', $projectPath, 'res://tests/fullscreen.tscn')
 if (-not $Visual) { $displayArgs = @('--headless') + $displayArgs }
 Invoke-GodotCheck 'fullscreen' $displayArgs
 Invoke-GodotCheck 'restart-seed' @('--headless', '--path', $projectPath, 'res://tests/regression.tscn', '--', '--restart-seed')
 Invoke-GodotCheck 'restart-load' @('--headless', '--path', $projectPath, 'res://tests/regression.tscn', '--', '--restart-load')
 Write-Output 'All regression checks passed.'
+
+

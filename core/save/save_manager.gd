@@ -77,3 +77,11 @@ func load_slot(slot: int) -> Dictionary:
 	end_manual_session()
 	EventBus.load_completed.emit(slot, result.get("recovered", false))
 	return result
+
+func delete_slot(slot: int, confirmed_revision: String) -> Dictionary:
+	if busy or SceneRouter.busy:
+		return {"ok":false,"error":"A save or transition is already in progress."}
+	busy = true
+	var result := store.delete_slot(slot,confirmed_revision)
+	busy = false
+	return result

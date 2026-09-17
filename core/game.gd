@@ -19,8 +19,8 @@ func _ready() -> void:
 	add_child(hud)
 	var menu := SaveLoadMenu.new()
 	add_child(menu)
-	await SceneRouter.new_game()
-	EventBus.message_requested.emit("Find your footing. The green pedestal is a SavePoint.")
+	var start_screen := StartScreen.new()
+	add_child(start_screen)
 
 func _configure_input() -> void:
 	var mappings := {

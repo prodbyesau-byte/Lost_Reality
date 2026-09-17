@@ -6,7 +6,7 @@ var practical: OmniLight3D
 
 func _ready() -> void:
 	super._ready()
-	interaction_name = "Toggle test lamp"
+	interaction_name = "Activate"
 	lamp = WorldGeometry.box(self, Vector3(0, 0.7, 0), Vector3(0.65, 1.4, 0.65), Color("bd9468"), true)
 	sight_body = lamp.get_parent() as StaticBody3D
 	lamp.hide()
@@ -33,3 +33,4 @@ func apply_state() -> void:
 		# The light source itself follows the existing persistent toggle.
 		var bulb := practical.get_parent().get_child(1) as MeshInstance3D
 		(bulb.material_override as StandardMaterial3D).emission_enabled = active
+

@@ -27,6 +27,9 @@ func run() -> void:
 	SaveManager.store = store
 	var game := preload("res://core/game.tscn").instantiate()
 	add_child(game)
+	for startup in game.get_children():
+		if startup is StartScreen:
+			await startup._new_game()
 	await tick()
 	for child in game.get_children():
 		if child is SaveLoadMenu:
@@ -277,3 +280,4 @@ func _write(path: String, value: String) -> void:
 	var file := FileAccess.open(path, FileAccess.WRITE)
 	file.store_string(value)
 	file.close()
+

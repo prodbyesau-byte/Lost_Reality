@@ -14,8 +14,11 @@ var character_panel: CharacterPanel
 var character_view: bool = false
 var slot_hint: Label
 var panel: PanelContainer
-var character_button: Button
 var new_game_confirmation: ConfirmationDialog
+var actions: VBoxContainer
+var settings: VBoxContainer
+var settings_view := false
+var delete_dialog: SaveDeleteDialog
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -33,12 +36,19 @@ func _ready() -> void:
 	overlay.add_child(center)
 	panel = PanelContainer.new()
 	panel.custom_minimum_size = Vector2(800, 0)
-	panel.add_theme_stylebox_override("panel", UIStyle.panel())
+	panel.add_theme_stylebox_override("panel", CharacterTheme.box(Color(0,0,0,0),Color(0,0,0,0),0))
 	center.add_child(panel)
+	var frame := CharacterFrame.new()
+	frame.header_rule = false
+	panel.add_child(frame)
+	var margin := MarginContainer.new()
+	for side in ["left","right","top","bottom"]:
+		margin.add_theme_constant_override("margin_"+side,36)
+	panel.add_child(margin)
 	var column := VBoxContainer.new()
 	column.add_theme_constant_override("separation", 16)
-	panel.add_child(column)
-	column.add_child(UIStyle.label("H A U N T E D   D I M E N S I O N", 14, UIStyle.ACCENT))
+	margin.add_child(column)
+	column.add_child(UIStyle.label("LOST REALITY", 14, UIStyle.ACCENT))
 	heading = UIStyle.label("", 32)
 	column.add_child(heading)
 	slot_hint = UIStyle.label("3 manual slots  /  1 autosave", 16, UIStyle.MUTED)
@@ -47,29 +57,35 @@ func _ready() -> void:
 	rows.add_theme_constant_override("separation", 10)
 	column.add_child(rows)
 	character_panel = CharacterPanel.new()
-	column.add_child(character_panel)
+	center.add_child(character_panel)
+	character_panel.close_requested.connect(close)
 	character_panel.hide()
 	status = UIStyle.label("", 16, UIStyle.MUTED)
-	status.custom_minimum_size = Vector2(750, 48)
+	status.custom_minimum_size = Vector2(0, 48)
 	status.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	column.add_child(status)
-	var actions := HBoxContainer.new()
+	actions = VBoxContainer.new()
 	actions.add_theme_constant_override("separation", 12)
 	column.add_child(actions)
 	var resume := Button.new()
-	resume.text = "Return to game"
+	resume.text = "RESUME"
 	resume.pressed.connect(close)
 	actions.add_child(resume)
-	character_button = Button.new()
-	character_button.text = "Character [C]"
-	character_button.pressed.connect(func() -> void: open(false) if character_view else open_character())
-	actions.add_child(character_button)
-	var new_game_button := Button.new()
-	new_game_button.text = "New Game"
-	new_game_button.pressed.connect(func() -> void: new_game_confirmation.popup_centered())
-	actions.add_child(new_game_button)
+	var settings_button := Button.new()
+	settings_button.text = "SETTINGS"
+	settings_button.pressed.connect(open_settings)
+	actions.add_child(settings_button)
+	settings = VBoxContainer.new()
+	settings.add_theme_constant_override("separation",16)
+	column.add_child(settings)
+	SettingsContent.populate(settings)
+	var back := Button.new()
+	back.text = "BACK"
+	back.pressed.connect(open.bind(false))
+	settings.add_child(back)
+	settings.hide()
 	var quit := Button.new()
-	quit.text = "Quit game"
+	quit.text = "QUIT GAME"
 	quit.pressed.connect(func() -> void: quit_confirmation.popup_centered())
 	actions.add_child(quit)
 	confirmation = ConfirmationDialog.new()
@@ -78,7 +94,9 @@ func _ready() -> void:
 	confirmation.confirmed.connect(_confirm_save)
 	add_child(confirmation)
 	quit_confirmation = ConfirmationDialog.new()
-	quit_confirmation.title = "Quit Haunted Dimension?"
+	quit_confirmation.title = "QUIT GAME?"
+	quit_confirmation.ok_button_text = "QUIT"
+	quit_confirmation.cancel_button_text = "CANCEL"
 	quit_confirmation.dialog_text = "Progress since your last save will be lost.\nManual saves are available only at a SavePoint."
 	quit_confirmation.confirmed.connect(func() -> void: get_tree().quit())
 	add_child(quit_confirmation)
@@ -87,6 +105,13 @@ func _ready() -> void:
 	new_game_confirmation.dialog_text = "Start again at Level 0 with zero stats and no profession?\nUnsaved progress will be lost. Existing save slots are kept."
 	new_game_confirmation.confirmed.connect(_new_game)
 	add_child(new_game_confirmation)
+	for dialog in [confirmation,quit_confirmation,new_game_confirmation]:
+		UIStyle.style_dialog(dialog)
+	delete_dialog = SaveDeleteDialog.new()
+	add_child(delete_dialog)
+	delete_dialog.completed.connect(func(result: Dictionary) -> void:
+		_refresh()
+		status.text = "Save deleted." if result.ok else result.error)
 	get_tree().auto_accept_quit = false
 	EventBus.save_menu_requested.connect(func() -> void: open(true))
 	overlay.hide()
@@ -106,7 +131,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 		return
 	if event.is_action_pressed("menu") and not event.is_echo() and not working and not SceneRouter.busy:
-		if overlay.visible:
+		if settings_view:
+			open(false)
+		elif overlay.visible:
 			close()
 		else:
 			open(false)
@@ -120,15 +147,19 @@ func open(at_save_point: bool) -> void:
 		SaveManager.end_manual_session()
 	character_view = false
 	character_panel.hide()
-	rows.show()
-	slot_hint.show()
-	status.show()
-	panel.custom_minimum_size.x = 800
-	character_button.text = "Character [C]"
-	heading.text = "Save your place" if save_mode else "Pause / Load game"
+	panel.show()
+	rows.visible = save_mode
+	slot_hint.visible = save_mode
+	status.visible = save_mode
+	panel.custom_minimum_size.x = 900 if save_mode else 620
+	settings_view = false
+	settings.hide()
+	actions.show()
+	heading.text = "SAVE STATE" if save_mode else "SYSTEM PAUSED"
 	status.text = "Choose a manual slot. Existing saves require confirmation." if save_mode else "Manual saving is available at a SavePoint. Loading replaces current progress."
-	_refresh()
+	if save_mode: _refresh()
 	overlay.show()
+	if not save_mode: actions.get_child(0).grab_focus()
 	get_tree().paused = true
 
 func open_character() -> void:
@@ -137,18 +168,11 @@ func open_character() -> void:
 	SaveManager.end_manual_session()
 	save_mode = false
 	character_view = true
-	heading.text = "Character / Progression"
-	rows.hide()
-	slot_hint.hide()
-	status.hide()
-	panel.custom_minimum_size.x = 940
-	character_button.text = "Save slots"
-	character_panel.feedback.text = ""
+	panel.hide()
 	character_panel.show()
-	character_panel.refresh()
 	overlay.show()
 	get_tree().paused = true
-	character_panel.debug_button.grab_focus()
+	character_panel.open_default()
 
 func close() -> void:
 	if working:
@@ -156,6 +180,10 @@ func close() -> void:
 	confirmation.hide()
 	quit_confirmation.hide()
 	new_game_confirmation.hide()
+	delete_dialog.hide()
+	settings_view = false
+	character_panel.preview.dragging = false
+	character_panel.preview.viewport.render_target_update_mode = SubViewport.UPDATE_DISABLED
 	overlay.hide()
 	SaveManager.end_manual_session()
 	get_tree().paused = false
@@ -168,9 +196,9 @@ func _new_game() -> void:
 	working = false
 	if result.ok:
 		close()
-		EventBus.message_requested.emit("New Game: Level 0. No profession. Press C to view your character.")
+		EventBus.message_requested.emit("New Game: Level 0. No profession.")
 	else:
-		status.show()
+		status.visible = save_mode
 		status.text = result.error
 
 func _refresh() -> void:
@@ -182,15 +210,14 @@ func _refresh() -> void:
 		row.add_theme_constant_override("separation", 10)
 		rows.add_child(row)
 		var result := SaveManager.store.read_slot(slot)
-		var text := SaveConstants.slot_name(slot) + "   /   Empty"
-		if result.ok:
-			var meta: Dictionary = result.data.metadata
-			var date := Time.get_datetime_string_from_unix_time(int(meta.timestamp)).replace("T", " ")
-			text = "%s  /  %s\n%s UTC  •  %dm %02ds%s" % [SaveConstants.slot_name(slot), LevelCatalog.title(result.data.scene), date, int(meta.playtime) / 60, int(meta.playtime) % 60, "  •  Recovery available" if result.get("recovered", false) else ""]
-		elif SaveManager.store.exists(slot):
-			text = SaveConstants.slot_name(slot) + "  /  Unavailable\n" + result.error
+		var text := SaveSlotPresentation.text(slot,result,SaveManager.store.exists(slot))
 		var label := UIStyle.label(text, 16)
-		label.custom_minimum_size = Vector2(520, 68)
+		label.add_theme_stylebox_override("normal",CharacterTheme.box(CharacterTheme.SURFACE,CharacterTheme.DIM,10))
+		if not result.ok and SaveManager.store.exists(slot):
+			label.add_theme_color_override("font_color",CharacterTheme.ERROR)
+		elif result.get("recovered",false):
+			label.add_theme_color_override("font_color",CharacterTheme.WARNING)
+		label.custom_minimum_size = Vector2(520, 78)
 		label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		row.add_child(label)
@@ -199,6 +226,7 @@ func _refresh() -> void:
 		load_button.disabled = not result.ok
 		load_button.pressed.connect(_load.bind(slot))
 		row.add_child(load_button)
+		delete_dialog.add_action(row,slot)
 		if save_mode and slot != SaveConstants.AUTOSAVE_SLOT:
 			var save_button := Button.new()
 			save_button.text = "Save"
@@ -234,10 +262,23 @@ func _load(slot: int) -> void:
 	if working:
 		return
 	working = true
-	status.text = "Restoring saved scene…"
+	status.text = "Recovering saved state…"
 	var result: Dictionary = await SaveManager.load_slot(slot)
 	working = false
 	if result.ok:
 		close()
 	else:
 		status.text = result.error
+
+
+
+func open_settings() -> void:
+	open(false)
+	SettingsContent.refresh(settings)
+	settings_view = true
+	heading.text = "CONFIGURATION"
+	actions.hide()
+	settings.show()
+	get_tree().paused = true
+	settings.get_child(1).grab_focus()
+

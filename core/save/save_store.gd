@@ -99,3 +99,25 @@ func _write_verified(path: String, data: Dictionary, slot: int) -> Dictionary:
 	if error != OK:
 		return {"ok": false, "error": "Save write failed."}
 	return read_file(path, slot)
+
+func deletion_revision(slot: int) -> String:
+	if not SaveConstants.valid_slot(slot): return ""
+	var parts := ""
+	for suffix in ["", ".bak", ".tmp", ".bak.tmp"]:
+		var path: String = path_for(slot) + suffix
+		if FileAccess.file_exists(path): parts += suffix + FileAccess.get_sha256(path)
+	return parts.sha256_text() if not parts.is_empty() else ""
+
+func delete_slot(slot: int, confirmed_revision: String) -> Dictionary:
+	if not SaveConstants.valid_slot(slot):
+		return {"ok":false,"error":"Invalid save slot."}
+	if confirmed_revision.is_empty() or deletion_revision(slot) != confirmed_revision:
+		return {"ok":false,"error":"Save changed or is empty. Review the slot and confirm again."}
+	# Exact known artifacts only. Remove recovery copies first to prevent resurrection.
+	# Keep primary until last, and report IO failures instead of pretending success.
+	for suffix in [".bak.tmp", ".tmp", ".bak", ""]:
+		var path: String = path_for(slot) + suffix
+		if FileAccess.file_exists(path) and DirAccess.remove_absolute(path) != OK:
+			return {"ok":false,"error":"Could not delete all save files. Review the slot and retry."}
+	return {"ok":true}
+

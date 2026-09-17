@@ -1,4 +1,6 @@
-# Haunted Dimension — Milestone 2
+# Lost Reality — Milestone 2
+
+**Future Machine UI:** Demon Time is now Lost Reality, in the same project. See [the interface guide](docs/LOST_REALITY_UI.md) for shared components, screen coverage and legacy save compatibility.
 
 **Visual quality upgrade:** the Tenement and Courtyard follow the [3D art-direction guide](docs/art/ART_DIRECTION.md), with shaped sedans, branching trees, pitched-roof suburban architecture, upholstered furniture, articulated human visuals, and distinct PBR surface maps. Fullscreen is permanent. Gameplay and save schema remain Milestone 2.
 
@@ -10,9 +12,9 @@ Import [project.godot](project.godot) in Godot 4 and press **F6 on `core/game.ts
 
 Alternatively, run `./Run-Game.ps1 -GodotPath 'C:\path\to\Godot_console.exe'`. Set `GODOT_PATH` to avoid supplying the path each time. No external addons or assets are required.
 
-Download the [standalone Windows build from GitHub Releases](https://github.com/prodbyesau-byte/DemonTime/releases/tag/build-2026-09-15). Locally it is `build/HauntedDimension.exe`. All game data is embedded in the executable; Godot does not need to be installed to play it. Build output is distributed through Releases rather than stored in Git history.
+Download the [standalone Windows build from GitHub Releases](https://github.com/prodbyesau-byte/DemonTime/releases/tag/build-2026-09-15). The current local build is `build/LostReality.exe`; the linked GitHub release is the older pre-rebrand build. All game data is embedded in the executable; Godot does not need to be installed to play it. Build output is distributed through Releases rather than stored in Git history.
 
-**F4** switches Atmospheric/Performance profiles while playing. Performance removes optional effects, local light shadows and secondary clutter while preserving curved and bevelled asset silhouettes. On older graphics hardware, launch `HauntedDimension.exe --rendering-method gl_compatibility`; unsupported SSAO/volumetric effects are disabled automatically. Profiles are presentation-only and do not change saved data.
+**F4** switches Atmospheric/Performance profiles while playing. Performance removes optional effects, local light shadows and secondary clutter while preserving curved and bevelled asset silhouettes. On older graphics hardware, launch `LostReality.exe --rendering-method gl_compatibility`; unsupported SSAO/volumetric effects are disabled automatically. Profiles are presentation-only and do not change saved data.
 
 ## Controls
 
@@ -115,3 +117,4 @@ The desktop determines physical resolution. No monitor mode or forced window-siz
 - Levels are small authored test areas; loading and capped 4 MiB save writes are synchronous. Streaming and background I/O are not part of this milestone.
 - Atomic rename and validated backups protect application-level interrupted writes. Absolute durability during sudden hardware/power failure depends on the OS/filesystem; Godot's flush is not a cross-platform disk `fsync` guarantee. Network filesystems and simultaneous game processes writing the same slots are not supported.
 - Windows/Godot 4.7.2 was tested. The Windows standalone build receives a startup smoke test. Other platforms have not been verified.
+

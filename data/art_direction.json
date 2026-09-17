@@ -167,6 +167,76 @@
       "color": "3e332c",
       "normal": 0.18,
       "metallic": 0.0
+    },
+    "player_iris": {
+      "texture": "skin",
+      "roughness": 0.4,
+      "metallic": 0.0,
+      "color": "3c3529",
+      "normal": 0.0
+    },
+    "player_skin": {
+      "texture": "skin",
+      "roughness": 0.76,
+      "metallic": 0.0,
+      "color": "c4a184",
+      "normal": 0.03
+    },
+    "player_hoodie": {
+      "texture": "fabric",
+      "roughness": 0.95,
+      "metallic": 0.0,
+      "color": "48443d",
+      "normal": 0.13
+    },
+    "player_eye": {
+      "texture": "skin",
+      "roughness": 0.4,
+      "metallic": 0.0,
+      "color": "bbb5a4",
+      "normal": 0.0
+    },
+    "player_shirt": {
+      "texture": "fabric",
+      "roughness": 0.95,
+      "metallic": 0.0,
+      "color": "98958d",
+      "normal": 0.08
+    },
+    "player_laces": {
+      "texture": "fabric",
+      "roughness": 0.96,
+      "metallic": 0.0,
+      "color": "ada18b",
+      "normal": 0.05
+    },
+    "player_lips": {
+      "texture": "skin",
+      "roughness": 0.78,
+      "metallic": 0.0,
+      "color": "996e5c",
+      "normal": 0.02
+    },
+    "player_hair": {
+      "texture": "skin",
+      "roughness": 0.9,
+      "metallic": 0.0,
+      "color": "483224",
+      "normal": 0.02
+    },
+    "player_denim": {
+      "texture": "fabric",
+      "roughness": 0.94,
+      "metallic": 0.0,
+      "color": "424b53",
+      "normal": 0.13
+    },
+    "player_pack": {
+      "texture": "fabric",
+      "roughness": 0.94,
+      "metallic": 0.0,
+      "color": "5b5040",
+      "normal": 0.19
     }
   },
   "lighting": {

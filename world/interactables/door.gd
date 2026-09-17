@@ -23,7 +23,7 @@ func _ready() -> void:
 	apply_state()
 
 func prompt() -> String:
-	return "Close door" if opened else "Open door"
+	return "Close Door" if opened else "Open Door"
 
 func interact(_actor: PlayerActor) -> void:
 	if opened:
@@ -49,3 +49,4 @@ func _update_panel() -> void:
 	panel.visible = true
 	panel.rotation.y = -PI/2 if opened else 0.0
 	panel.position = Vector3(-0.9,0,0.9) if opened else Vector3.ZERO
+

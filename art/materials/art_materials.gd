@@ -66,6 +66,8 @@ static func surface(id: String) -> StandardMaterial3D:
 	material.uv1_scale = Vector3.ONE * 0.5
 	if family in ["fabric", "skin", "wood", "bark", "metal"]:
 		material.uv1_world_triplanar = false
+	if id.begins_with("player_") and family == "fabric":
+		material.uv1_scale = Vector3.ONE * 3.0
 	material.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS_ANISOTROPIC
 	_surfaces[id] = material
 	return material

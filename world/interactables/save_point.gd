@@ -6,7 +6,7 @@ var beacon: MeshInstance3D
 func _ready() -> void:
 	super._ready()
 	name = "SavePoint"
-	interaction_name = "Use SavePoint"
+	interaction_name = "Use Savepoint"
 	beacon = WorldGeometry.box(self, Vector3(0, 0.58, 0), Vector3(0.65, 1.16, 0.65), Color("59695c"), true)
 	beacon.material_override = ArtMaterials.surface("paint").duplicate()
 	sight_body = beacon.get_parent() as StaticBody3D
@@ -22,3 +22,4 @@ func interact(_actor: PlayerActor) -> void:
 
 func focus(active: bool) -> void:
 	(beacon.material_override as StandardMaterial3D).albedo_color = Color("83927b") if active else Color("59695c")
+

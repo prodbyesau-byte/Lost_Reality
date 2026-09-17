@@ -20,7 +20,7 @@ func _physics_process(_delta: float) -> void:
 		focused = nearest
 		if is_instance_valid(focused):
 			focused.focus(true)
-	EventBus.interaction_focus_changed.emit("[E]  " + focused.prompt() if is_instance_valid(focused) else "")
+	EventBus.interaction_focus_changed.emit(focused.prompt() if is_instance_valid(focused) else "")
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("interact") and not event.is_echo() and not SceneRouter.busy:
@@ -44,3 +44,4 @@ func clear_focus() -> void:
 		focused.focus(false)
 	focused = null
 	EventBus.interaction_focus_changed.emit("")
+
